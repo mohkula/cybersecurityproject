@@ -1,0 +1,20 @@
+<form action='add/' method="POST" enctype="multipart/form-data">
+    {% csrf_token %}
+
+    
+    
+
+    <textarea name="content" cols="40" rows="5"></textarea><br/>
+    <input type="submit" value="Send"/>
+</form>
+
+{% if latest_messages_list  %}
+    <ul>
+    {% for message in latest_messages_list %}
+    {{message.message_from}}:
+    {{ message.message_text }}
+    {% endfor %}
+    </ul>
+{% else %}
+    <p>No messages are available.</p>
+{% endif %}

@@ -1,5 +1,27 @@
+
+  
+{% if user.is_authenticated %}
+Logged in as {{user.get_username}}
+<a class="btn btn-primary" href="/logout">Log out</a>
+<p>Last login: {{user.last_login   }}</p>
+
+
+
+{% else %}
+
+<a class="btn btn-primary" href="/login">Log in</a>
+<a class="btn btn-primary" href="/signup">Sign up</a>
+
+{% endif %}
+
+
+
+
 <form action='add/' method="POST" enctype="multipart/form-data">
     {% csrf_token %}
+
+
+   
 
     
     
@@ -8,11 +30,56 @@
     <input type="submit" value="Send"/>
 </form>
 
+
+
+
+
+{% if messages %}
+All messages:
+<ul>
+  
+{% for message in messages %}
+
+
+{% if message.1 == 'AnonymousUser' %}
+<li>{{ message.1}} : {{message.0}}</li> 
+
+{% elif user.is_authenticated %}
+<li><a class="btn btn-primary" href="user/{{message.1.pk}}">{{ message.1}}</a>: {{message.0}}</li>
+{% else %}
+<li>{{ message.1}} : {{message.0}}</li>
+{% endif %}
+{% endfor %}
+</ul>
+{% else %}
+    <p>No messages are available.</p>
+{% endif %}
+
+
+{% if users %}
+All users:
+<ul>
+  
+{% for user in users %}
+
+<li>{{user}}</li>
+
+{% endfor %}
+</ul>
+{% else %}
+    <p>No messages are available.</p>
+{% endif %}
+
+
+
+Latest messages:
 {% if latest_messages_list  %}
     <ul>
+        
     {% for message in latest_messages_list %}
-    {{message.message_from}}:
-    {{ message.message_text }}
+    
+    <li>{{ message.1}}: {{message.0}}</li>
+    
     {% endfor %}
     </ul>
 {% else %}

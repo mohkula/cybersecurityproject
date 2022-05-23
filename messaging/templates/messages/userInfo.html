@@ -1,0 +1,13 @@
+<p><b>userpage</b></p>
+
+{% if viewedUser %}
+messages sent by <b>{{viewedUser.get_username}}</b>
+{% if messagesByUser%}
+<ul>
+{% for mes in messagesByUser %}
+<li>{{ mes}}</li>
+
+{% endfor %}
+{% endif %}
+</ul>
+{% endif %}

